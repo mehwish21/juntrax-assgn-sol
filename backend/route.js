@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const findPaths = require('./controller')
+const getPaths = require('./controller')
 
 
-router.post('/paths',findPaths)
+router.post('/paths',getPaths)
 
 module.exports = router
