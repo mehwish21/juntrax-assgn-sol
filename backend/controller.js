@@ -1,37 +1,43 @@
-function findAllPaths(data, start, end, path = []) {
-  path.push(start);
-  
-  if (start === end) {
-    return [path];
-  }
-  
-  let paths = [];
-  for(let node in data){
-    if(data.hasOwnProperty(start)){
-    let newPaths = findAllPaths(data, node, end, path.slice());
-    paths.push(...newPaths);
+
+
+let getPaths = function (req, res) {
+  let start = req.body.start;
+
+  let path = req.body.path
+  let data = req.body.data;
+  console.log(path, data)
+
+  const getAllPaths = function (key, path) {
+
+    let values = data[key];
+    if (!values || values.length === 0) {
+      // Base case: reached the end of the path
+      return [path];
     }
+    // Recursive case: explore all possible paths from this key
+    let result = [];
+    for (let value of values) {
+      let newPath = path.concat(value);
+      let subPaths = getAllPaths(value, newPath);
+      result.push(...subPaths);
+    }
+    return result;
   }
-//   data[start].forEach(node => {
-//     if (!path.includes(node)) {
-//       let newPaths = findAllPaths(data, node, end, path.slice());
-//       paths.push(...newPaths);
-//     }
-//   });
-  
-  return paths;
+  let ways = getAllPaths(start, path);
+  res.status(200).send({ status: true, data: ways });
 }
 
-// Example usage:
-// let data = {
-//   1: [2, 3, 4, 5],
-//   2: [6],
-//   3: [6, 7],
-//   4: [7, 8],
-//   5: [8]
-// };
+module.exports = getPaths
 
-// let paths = findAllPaths(data, 1, 8);
-// console.log(paths); // [[1, 2, 6, 8], [1, 3, 6, 8], [1, 3, 7, 8], [1, 4, 7, 8], [1, 4, 8], [1, 5, 8]]
+  // let data = {
+  //   1: [2, 3, 4, 5],
+  //   2: [6],
+  //   3: [6, 7],
+  //   4: [7, 8],
+  //   5: [8]
+  // };
 
-module.exports = findAllPaths
+  // let output = getAllPaths(1, [1]);
+  // console.log(output);
+
+
