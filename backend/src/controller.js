@@ -1,11 +1,10 @@
-
+// function for creating paths
 
 let getPaths = function (req, res) {
   let start = req.body.start;
 
   let path = req.body.path
   let data = req.body.data;
-  console.log(path, data)
 
   const getAllPaths = function (key, path) {
 
@@ -29,15 +28,6 @@ let getPaths = function (req, res) {
 
 module.exports = getPaths
 
-  // let data = {
-  //   1: [2, 3, 4, 5],
-  //   2: [6],
-  //   3: [6, 7],
-  //   4: [7, 8],
-  //   5: [8]
-  // };
 
-  // let output = getAllPaths(1, [1]);
-  // console.log(output);
 
 
